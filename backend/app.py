@@ -83,6 +83,15 @@ def base_ydl_opts():
 @app.route("/api/health")
 def health():
     return jsonify({"ok": True, "message": "KindEyes server is running"})
+@app.route("/api/debug")
+def debug():
+    cookies_env = os.environ.get("YOUTUBE_COOKIES", "")
+    cookies_file = os.path.exists("cookies.txt")
+    return jsonify({
+        "cookies_env_length": len(cookies_env),
+        "cookies_env_preview": cookies_env[:100] if cookies_env else "EMPTY",
+        "cookies_file_exists": cookies_file,
+    })
 
 
 @app.route("/api/voices")
